@@ -7,7 +7,7 @@
       ></SearchInput>
       <ul>
         <li
-          v-for="item in items"
+          v-for="item in proceedItems"
           :key="item.id"
           class="item flex"
           @click="routeToDetailPage(item.id)"
@@ -36,14 +36,13 @@ export default {
   async asyncData() {
     try {
       const { data } = await fetchProducts()
-      const items = data.map((item) => ({
-        ...item,
-        imageUrl: `${item.imageUrl}?random=${Math.random()}`,
-      }))
+      const items = data
       return { items }
     } catch (error) {
-      const items = []
-      return { items }
+      error({
+        statusCode: 503,
+        message: 'API 요청이 실패했습니다 다시 시도해 주세요',
+      })
     }
   },
 
@@ -53,13 +52,19 @@ export default {
     }
   },
 
-  methods: {
-    async filterItemsBySearchText() {
-      const { data } = await fetchProductsByKeyword(this.inputText)
-      this.items = data.map((item) => ({
+  computed: {
+    proceedItems() {
+      return this.items.map((item) => ({
         ...item,
         imageUrl: `${item.imageUrl}?random=${Math.random()}`,
       }))
+    },
+  },
+
+  methods: {
+    async filterItemsBySearchText() {
+      const { data } = await fetchProductsByKeyword(this.inputText)
+      this.items = data
     },
     routeToDetailPage(id) {
       this.$router.push(`/product/${id}`)

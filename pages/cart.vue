@@ -3,7 +3,7 @@
     <h1 class="list-title">담긴 상품 목록</h1>
     <div class="list-wrapper">
       <ul>
-        <li v-for="cart in carts" :key="cart.id" class="list-item">
+        <li v-for="cart in proceedCarts" :key="cart.id" class="list-item">
           <img class="thumbnail" :src="cart.imageUrl" :alt="cart.name" />
           <div class="description">
             <p>{{ cart.name }}</p>
@@ -19,16 +19,27 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  async asyncData({ store }) {
-    await store.dispatch('fetchCarts')
-  },
+  // async asyncData({ store }) {
+  //   await store.dispatch('fetchCarts')
+  // },
 
   computed: {
+    ...mapGetters(['proceedCarts']),
     carts() {
       return this.$store.state.carts
     },
   },
+
+  // created() {
+  //   this.fetchCarts()
+  // },
+
+  // methods: {
+  //   ...mapActions(['fetchCarts']),
+  // },
 }
 </script>
 
