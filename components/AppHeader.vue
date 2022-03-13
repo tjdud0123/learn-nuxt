@@ -1,5 +1,6 @@
 <template>
   <header class="title">
+    <!-- <NuxtLink class="logo" to="/">Nuxt Shopping</NuxtLink> -->
     <nuxt-link class="logo" to="/">Nuxt Shopping</nuxt-link>
   </header>
 </template>
