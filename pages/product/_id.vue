@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import { createCartItem, fetchProductById } from '~/api'
 
 export default {
@@ -27,9 +28,11 @@ export default {
   },
 
   methods: {
+    ...mapMutations(['addItemToCart']),
     async addToCart() {
       await createCartItem(this.product)
-      this.$store.commit('addItemToCart', this.product)
+      // this.$store.commit('addItemToCart', this.product)
+      this.addItemToCart(this.product)
       this.$router.push('/cart')
     },
   },
