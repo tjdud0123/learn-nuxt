@@ -27,6 +27,29 @@ export default {
     return { product: response.data }
   },
 
+  head() {
+    return {
+      title: `상품 상세 페이지 - ${this.product.name}`,
+      meta: [
+        {
+          hid: 'og:title', // og:을 붙여준다
+          property: 'og:title',
+          content: `상품 상세 페이지 - ${this.product.name}`,
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: `이 페이지는 ${this.product.name} 상품입니다`,
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: this.product.imageUrl,
+        },
+      ],
+    }
+  },
+
   methods: {
     ...mapMutations(['addItemToCart']),
     async addToCart() {
